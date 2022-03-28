@@ -8,8 +8,8 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/errs"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/logger"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/logger"
 )
 
 type CustomerRepositoryDb struct {

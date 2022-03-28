@@ -3,7 +3,7 @@ package dto
 import (
 	"strings"
 
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
 )
 
 type NewAccountRequest struct {

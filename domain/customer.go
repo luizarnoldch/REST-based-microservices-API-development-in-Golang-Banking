@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/errs"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/dto"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
 )
 
 type Customer struct {

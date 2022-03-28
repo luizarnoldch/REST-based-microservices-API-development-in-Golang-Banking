@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/dto"
+import "github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
 
 const WITHDRAWAL = "withdrawal"
 

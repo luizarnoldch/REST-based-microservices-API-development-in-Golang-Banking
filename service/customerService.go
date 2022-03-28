@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/domain"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/errs"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/dto"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
 )
 
 type CustomerService interface {

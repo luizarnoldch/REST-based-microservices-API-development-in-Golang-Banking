@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/errs"
+import "github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
 
 const WITHDRAWAL = "withdrawal"
 const DEPOSIT = "deposit"

@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/dto"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/service"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/service"
 )
 
 type AccountHandler struct {

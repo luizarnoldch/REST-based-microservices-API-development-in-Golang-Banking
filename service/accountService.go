@@ -3,9 +3,9 @@ package service
 import (
 	"time"
 
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/domain"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/dto"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
 )
 
 const dbTSLayout = "2006-01-02 15:04:05"
