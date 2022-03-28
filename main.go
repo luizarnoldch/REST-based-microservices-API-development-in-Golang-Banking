@@ -3,8 +3,8 @@ package main
 import (
 	//"log"
 
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking-lib/logger"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang/banking/app"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/logger"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/app"
 )
 
 func main() {

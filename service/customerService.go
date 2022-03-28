@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
 	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
 	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
 )
 
@@ -15,11 +15,12 @@ type CustomerService interface {
 type DefaultCustomerService struct {
 	repo domain.CustomerRepository
 }
+
 func (s DefaultCustomerService) GetAllCustomer(status string) ([]domain.Customer, *errs.AppError) {
-//func (s DefaultCustomerService) GetAllCustomer() ([]domain.Customer, error) {
-	if status == "active"{
+	//func (s DefaultCustomerService) GetAllCustomer() ([]domain.Customer, error) {
+	if status == "active" {
 		status = "1"
-	} else if status == "inactive"{
+	} else if status == "inactive" {
 		status = "0"
 	} else {
 		status = ""
@@ -32,7 +33,7 @@ func (s DefaultCustomerService) GetCustomer(id string) (*dto.CustomerResponse, *
 	if err != nil {
 		return nil, err
 	}
-	response := c.ToDto()	
+	response := c.ToDto()
 	return &response, nil
 }
 
