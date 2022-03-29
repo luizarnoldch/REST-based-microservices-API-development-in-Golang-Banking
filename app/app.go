@@ -10,9 +10,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/logger"
 	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
 	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/service"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/logger"
 )
 
 func sanityCheck() {

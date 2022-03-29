@@ -1,14 +1,15 @@
 package app
 
 import (
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/mocks/service"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
-	"github.com/golang/mock/gomock"
-	"github.com/gorilla/mux"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/golang/mock/gomock"
+	"github.com/gorilla/mux"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/dto"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/mocks/service"
 )
 
 var router *mux.Router

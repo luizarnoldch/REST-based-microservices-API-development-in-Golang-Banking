@@ -1,11 +1,12 @@
 package app
 
 import (
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
-	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
-	"github.com/gorilla/mux"
 	"net/http"
 	"strings"
+
+	"github.com/gorilla/mux"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/errs"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
 )
 
 type AuthMiddleware struct {
