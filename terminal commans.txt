@@ -1,0 +1,42 @@
+#inicializing
+go mod init [url_repository]
+
+
+#updating
+go mod tidy
+
+#external libraries
+
+#--banking
+go get -u github.com/gorilla/mux
+go get -u github.com/go-sql-driver/mysql
+go get -u go.uber.org/zap
+go get github.com/jmoiron/sqlx
+go get github.com/joho/godotenv
+go get github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib@v0.1.3
+	#-- testing
+		#--Go versión < 1.16
+GO111MODULE=on go get github.com/golang/mock/mockgen@v1.6.0
+		#-- GO version 1.16+
+go install github.com/golang/mock/mockgen@v1.6.0
+github.com/DATA-DOG/go-sqlmock
+
+
+# Verificar los comentarios de testing en donde se quiera hacer mock y pegar [URL]
+go generate ./...
+
+#--banking-auth
+go get github.com/dgrijalva/jwt-go
+go get -u github.com/gorilla/mux
+go get -u github.com/go-sql-driver/mysql
+go get -u go.uber.org/zap
+go get github.com/jmoiron/sqlx
+go get github.com/joho/godotenv
+go get github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib@v0.1.3
+
+#--banking-lib
+go get -u go.uber.org/zap
+cat go.mod
+
+
+

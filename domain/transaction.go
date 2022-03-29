@@ -9,11 +9,14 @@ type Transaction struct {
 	AccountId       string  `db:"account_id"`
 	Amount          float64 `db:"amount"`
 	TransactionType string  `db:"transaction_type"`
-	TransactionDate string  `db:"transactionDate"`
+	TransactionDate string  `db:"transaction_date"`
 }
 
 func (t Transaction) IsWithdrawal() bool {
-	return t.TransactionType == WITHDRAWAL
+	if t.TransactionType == WITHDRAWAL {
+		return true
+	}
+	return false
 }
 
 func (t Transaction) ToDto() dto.TransactionResponse {

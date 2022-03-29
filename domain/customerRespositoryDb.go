@@ -17,69 +17,35 @@ type CustomerRepositoryDb struct {
 }
 
 func (d CustomerRepositoryDb) FindAll(status string) ([]Customer, *errs.AppError) {
-	//func (d CustomerRepositoryDb) FindAll() ([]Customer, error) {
-	//findAllSql := "SELECT * FROM customers"
-	//rows, err := d.client.Query(findAllSql)
-	//var rows *sql.Rows
-
 	var err error
 	customers := make([]Customer, 0)
 
 	if status == "" {
-		findAllSql := "select * from customers"
+		findAllSql := "select customer_id, name, city, zipcode, date_of_birth, status from customers"
 		err = d.client.Select(&customers, findAllSql)
-		//rows, err = d.client.Query(findAllSql)
 	} else {
-		findAllSql := "select * from customers where status = ?"
-		//rows, err = d.client.Query(findAllSql, status)
+		findAllSql := "select customer_id, name, city, zipcode, date_of_birth, status from customers where status = ?"
 		err = d.client.Select(&customers, findAllSql, status)
 	}
 
 	if err != nil {
-		logger.Error("Error While Querying customers" + err.Error())
+		logger.Error("Error while querying customers table " + err.Error())
 		return nil, errs.NewUnexpectedError("Unexpected database error")
 	}
 
-	/*
-		sqlx.StructScan(rows, &customers)
-		if err != nil {
-			logger.Error("Error while scanning customers customers")
-			return nil, errs.NewUnexpectedError("Unexpected database error")
-			//return nil, logger.Error("Error while scanning customers")
-		}
-	*/
-
-	/*
-		for rows.Next() {
-			var c Customer
-			err := rows.Scan(&c.Id, &c.Name, &c.City, &c.Zipcode, &c.DateofBirth, &c.Status)
-			if err != nil {
-				logger.Error("Error while scanning customers customers")
-				return nil, errs.NewUnexpectedError("Unexpected database error")
-				//return nil, logger.Error("Error while scanning customers")
-			}
-			customers = append(customers, c)
-		}
-	*/
 	return customers, nil
 }
 
 func (d CustomerRepositoryDb) ById(id string) (*Customer, *errs.AppError) {
-	customerSql := "SELECT * FROM customers WHERE customer_id = ?"
-
-	//row := d.client.QueryRow(customerSql, id)
+	customerSql := "select customer_id, name, city, zipcode, date_of_birth, status from customers where customer_id = ?"
 
 	var c Customer
 	err := d.client.Get(&c, customerSql, id)
-
-	//err := row.Scan(&c.Id, &c.Name, &c.City, &c.Zipcode, &c.DateofBirth, &c.Status)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			logger.Error("Customer not found")
 			return nil, errs.NewNotFoundError("Customer not found")
 		} else {
-			//log.Println("Error while scanning customers" + err.Error())
-			logger.Error("Error while scanning customers" + err.Error())
+			logger.Error("Error while scanning customer " + err.Error())
 			return nil, errs.NewUnexpectedError("Unexpected database error")
 		}
 	}

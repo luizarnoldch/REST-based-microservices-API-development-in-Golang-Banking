@@ -12,11 +12,22 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/domain"
 	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking/service"
+	"github.com/luizarnoldch/REST-based-microservices-API-development-in-Golang-Banking-Lib/logger"
 )
 
-func sanityCheck(){
-	if os.Getenv("SERVER_ADDRESS") == "" || os.Getenv("SERVER_PORT") == "" {
-		log.Fatal("Environment varaible not defined")
+func sanityCheck() {
+	envProps := []string{
+		"SERVER_ADDRESS",
+		"SERVER_PORT",
+		"DB_USER",
+		"DB_PASSWD",
+		"DB_ADDR",
+		"DB_NAME",
+	}
+	for _, k := range envProps {
+		if os.Getenv(k) == "" {
+			logger.Fatal(fmt.Sprintf("Environment variable %s not defined. Terminating application...", k))
+		}
 	}
 }
 
@@ -25,73 +36,60 @@ func Start() {
 	if err != nil {
 		log.Fatal("Error loading .env")
 	}
-	
+
 	sanityCheck()
-	//mux := http.NewServeMux()
-	mux := mux.NewRouter()
 
+	router := mux.NewRouter()
 
-	//defining database
-	dbClient := getDbClient()
-	customerRespositoryDb := domain.NewCustomerRepositoryDb(dbClient)
-	accountRespositoryDb := domain.NewAccountRepositoryDb(dbClient)
-
-	//define Data
-
+	//wiring
 	//ch := CustomerHandlers{service.NewCustomerService(domain.NewCustomerRepositoryStub())}
+	dbClient := getDbClient()
+	customerRepositoryDb := domain.NewCustomerRepositoryDb(dbClient)
+	accountRepositoryDb := domain.NewAccountRepositoryDb(dbClient)
+	ch := CustomerHandlers{service.NewCustomerService(customerRepositoryDb)}
+	ah := AccountHandler{service.NewAccountService(accountRepositoryDb)}
 
-	//ch := CustomerHandlers{service.NewCustomerService(domain.NewCustomerRepositoryDb(dbClient))}
-
-	ch := CustomerHandlers{service.NewCustomerService(customerRespositoryDb)}
-	ah := AccountHandler{service.NewAccountService(accountRespositoryDb)}
-
-	//difine routes
-
-	mux.
+	// define routes
+	router.
 		HandleFunc("/customers", ch.getAllCustomers).
-		Methods(http.MethodGet)
-
-	mux.
+		Methods(http.MethodGet).
+		Name("GetAllCustomers")
+	router.
 		HandleFunc("/customers/{customer_id:[0-9]+}", ch.getCustomer).
-		Methods(http.MethodGet)
-
-	mux.
+		Methods(http.MethodGet).
+		Name("GetCustomer")
+	router.
 		HandleFunc("/customers/{customer_id:[0-9]+}/account", ah.NewAccount).
-		Methods(http.MethodPost)
+		Methods(http.MethodPost).
+		Name("NewAccount")
+	router.
+		HandleFunc("/customers/{customer_id:[0-9]+}/account/{account_id:[0-9]+}", ah.MakeTransaction).
+		Methods(http.MethodPost).
+		Name("NewTransaction")
 
-	mux.
-		HandleFunc("/customers/{customer_id:[0-9]+}/account/{customer_id:[0-9]+}", ah.MakeTransaction).
-		Methods(http.MethodPost)
-	/*
-		mux.HandleFunc("/greet", greet).Methods(http.MethodGet)
-		mux.HandleFunc("/customers", createCustomer).Methods(http.MethodPost)
-		//Regex para evaluar solo números
-
-	*/
+	am := AuthMiddleware{domain.NewAuthRepository()}
+	router.Use(am.authorizationHandler())
+	// starting server
 	address := os.Getenv("SERVER_ADDRESS")
 	port := os.Getenv("SERVER_PORT")
-	//starting server
-	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s",address,port), mux))
+	logger.Info(fmt.Sprintf("Starting server on %s:%s ...", address, port))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", address, port), router))
+
 }
 
 func getDbClient() *sqlx.DB {
-	driver := "mysql"
-	//usuario := "root"
-	usuario := os.Getenv("DB_USER")
-	//pass := "u1OboD93110614"
-	pass := os.Getenv("DB_PASSWD")
-	//port := "tcp(localhost:3306)"
-	port := os.Getenv("DB_ADDRESS_PORT")
-	//table := "banking"
-	table := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("DB_USER")
+	dbPasswd := os.Getenv("DB_PASSWD")
+	dbAddr := os.Getenv("DB_ADDR")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
 
-	dataSource := fmt.Sprintf("%s:%s@%s/%s", usuario, pass, port, table)
-
-	client, err := sqlx.Open(driver, dataSource)
+	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPasswd, dbAddr, dbPort, dbName)
+	client, err := sqlx.Open("mysql", dataSource)
 	if err != nil {
 		panic(err)
 	}
-
+	// See "Important settings" section.
 	client.SetConnMaxLifetime(time.Minute * 3)
 	client.SetMaxOpenConns(10)
 	client.SetMaxIdleConns(10)

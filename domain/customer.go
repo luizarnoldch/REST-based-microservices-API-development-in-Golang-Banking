@@ -8,9 +8,9 @@ import (
 type Customer struct {
 	Id          string `db:"customer_id"`
 	Name        string
-	DateofBirth string `db:"date_of_birth"`
 	City        string
 	Zipcode     string
+	DateofBirth string `db:"date_of_birth"`
 	Status      string
 }
 
@@ -23,7 +23,6 @@ func (c Customer) statusAsText() string {
 }
 
 func (c Customer) ToDto() dto.CustomerResponse {
-
 	return dto.CustomerResponse{
 		Id:          c.Id,
 		Name:        c.Name,
@@ -37,5 +36,4 @@ func (c Customer) ToDto() dto.CustomerResponse {
 type CustomerRepository interface {
 	FindAll(status string) ([]Customer, *errs.AppError)
 	ById(string) (*Customer, *errs.AppError)
-	//ById(string) (*Customer, error)
 }
